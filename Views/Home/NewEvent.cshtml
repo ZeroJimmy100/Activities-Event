@@ -1,0 +1,65 @@
+@model WrapperViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Form</title>
+</head>
+<body>
+    <p>
+        <a href="/Dashboard/@Model.NewUser.UserId">Dashboard</a>
+    </p>
+    <form asp-action="Logout" asp-controller="Home" method="Post">
+        <input type="submit" value="Log out"/>
+    </form>
+    <h1>Add an Event</h1>
+    
+    <div id="EventFormBox">
+            <form asp-action="CreateEvent" asp-controller="Home" method="POST" asp-route-UserId="@Model.NewUser.UserId">
+               <span asp-validation-for="NewEventForm.Title"></span>
+                <p>
+                    <label asp-for="NewEventForm.Title"></label>
+                    <input type="text" asp-for="NewEventForm.Title"/>
+                </p>
+                <p>@ViewBag.Error</p>
+                <span asp-validation-for="NewEventForm.Date"></span>
+                <p>
+                    <label asp-for="NewEventForm.Date"></label>
+                    <input type="datetime-local" asp-for="NewEventForm.Date"/>
+                </p>
+                
+                @* <span asp-validation-for="NewEventForm.TimeDate"></span>
+                <p>
+                    <label asp-for="NewEventForm.TimeDate"></label>        
+                    <input type="time" asp-for="NewEventForm.TimeDate"/>
+                </p> *@
+                 <span asp-validation-for="NewEventForm.EventDuration"></span>
+                <p>
+                    <label asp-for="NewEventForm.EventDuration"></label>
+                    <input type="text" asp-for="NewEventForm.EventDuration"/>
+                </p>
+                <p>
+                    <label asp-for="NewEventForm.Duration"></label>
+                    <select asp-for="NewEventForm.Duration">
+                        <option>Minutes</option>
+                        <option>Hours</option>
+                        <option>Days</option>
+                        <option>Months</option>
+                    </select>
+                </p>
+                <span asp-validation-for="NewEventForm.Description"></span>
+                <p>
+                    <label asp-for="NewEventForm.Description"></label>
+                    <textarea type="text" asp-for="NewEventForm.Description" cols="60" rows="5"></textarea>
+                </p>
+                    
+                <p></p>
+                <input value="Create" type="submit"/>
+
+            </form>
+        </div>
+
+</body>
+</html>

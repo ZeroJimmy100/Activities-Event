@@ -1,0 +1,74 @@
+﻿@model WrapperViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <div id="FormBox">
+            <form asp-action="Register" asp-controller="Home" method="POST">
+               <span asp-validation-for="NewUser.FirstName"></span>
+                <p>
+                    <label asp-for="NewUser.FirstName"></label>
+                    <input type="text" asp-for="NewUser.FirstName"/>
+                </p>
+                    
+                <span asp-validation-for="NewUser.LastName"></span>
+                <p>
+                    <label asp-for="NewUser.LastName"></label>
+                    <input type="text" asp-for="NewUser.LastName"/>
+                </p>
+                
+                <span asp-validation-for="NewUser.Email"></span>
+                <p>
+                    <label asp-for="NewUser.Email"></label>        
+                    <input type="text" asp-for="NewUser.Email"/>
+                </p>
+                 <span asp-validation-for="NewUser.PassWord"></span>
+                <p>
+                    <label asp-for="NewUser.PassWord"></label>
+                    <input type="text" asp-for="NewUser.PassWord"/>
+                </p>
+
+                <span asp-validation-for="NewUser.ConfirmPW"></span>
+                <p>
+                    <label asp-for="NewUser.ConfirmPW"></label>
+                    <input type="text" asp-for="NewUser.ConfirmPW"/>
+                </p>
+                    
+                <p></p>
+                <input value="Register" type="submit"/>
+
+            </form>
+        </div>
+
+ <h1>Login</h1>
+  
+
+    <div id="FormBox">
+            <form asp-action="LogUser" asp-controller="Home" method="post" >
+                
+                <span asp-validation-for="LoginUser.Email"></span>
+                <p>
+                    <label asp-for="LoginUser.Email"></label>        
+                    <input type="text" asp-for="LoginUser.Email"/>
+                </p>
+                
+                <span asp-validation-for="LoginUser.PassWord"></span>
+                <p>
+                    <label asp-for="LoginUser.PassWord"></label>
+                    <input type="text" asp-for="LoginUser.PassWord"/>
+                </p>
+               
+                <p></p>
+                <input value="login" type="submit"/>
+
+            </form>
+        </div>
+    
+</body>
+</html>

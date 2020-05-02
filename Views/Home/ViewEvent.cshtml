@@ -1,0 +1,38 @@
+@model WrapperViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    @{
+        string EventDate = @Model.NewEventForm.Date.ToString("dddd, MMMM, dd");
+    }
+    <p>
+        <a href="/Dashboard/@Model.NewUser.UserId">Dashboard</a>
+    </p>
+    <form asp-action="Logout" asp-controller="Home" method="Post">
+        <input type="submit" value="Log out"/>
+    </form>
+
+    <h1>@Model.NewEventForm.Title</h1>
+    <h5>Event Coordinator: @Model.NewEventForm.ThePlanner.FirstName @Model.NewEventForm.ThePlanner.LastName</h5>
+
+    <br/>
+    <h5>Description: @Model.NewEventForm.Description</h5>
+
+    <h5>Participants: </h5>
+
+    @foreach(FormEvent Guest in @Model.ListEvents){
+        @foreach(Associates attending in Guest.Attending){
+            @if(attending.EventFormId == @Model.NewEventForm.EventFormId){
+            <h5>@attending.User.FirstName @attending.User.LastName</h5>
+            }
+        }
+    }
+   
+</body>
+</html>

@@ -1,0 +1,75 @@
+@model WrapperViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <form asp-action="Logout" asp-controller="Home" method="Post">
+        <input type="submit" value="Log out"/>
+    </form>
+    <h1>Welcome to Coding Dojo Event</h1>
+    <h3><a href="/AddEvent/@Model.NewUser.UserId">Add an Event</a></h3>
+
+    <table class="table table-striped">
+            <tr>
+                <th>Title </th>
+                <th>Creator </th>
+                <th>Date Time </th>
+                <th>Duration </th>
+                <th>Participants </th>
+                <th>Action </th>
+            </tr>
+        @foreach(FormEvent e in @Model.ListEvents){
+            var timezone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+           string EventDate = TimeZoneInfo.ConvertTime(@e.Date, timezone).ToString("dddd, MMMM, dd, HH:MM tt");
+           
+           DateTime Today = DateTime.Now;
+           string TodayDate = Today.ToString("dddd, MMMM, dd");
+           int result = DateTime.Compare(@e.Date, Today);
+
+           
+           if(result > 0){
+                <tr>
+                    <td><a href="/Event/@e.EventFormId/@Model.NewUser.UserId">@e.Title</a></td>
+                    <td>@e.ThePlanner.FirstName @e.ThePlanner.LastName</td>
+                    
+                    <td>
+                        @EventDate
+                    </td>
+
+                    <td>@e.EventDuration @e.Duration</td>
+
+                    <td>@e.Attending.Count</td>
+                    
+                    <td>@if(e.UserId == @Model.NewUser.UserId){
+                        <form asp-action="DeleteEvent" asp-controller="Home" method="get" asp-route-EventFormId="@e.EventFormId" asp-route-UserId="@Model.NewUser.UserId">
+                            <input type="submit" value="Delete"/>
+                        </form>
+                        
+                    }
+                    @* @foreach(GuestAssociation ListGuest in @Model.ListAttendings){ *@
+                    @if(!e.Attending.Any(a => a.UserId == @Model.NewUser.UserId)){
+                        <form asp-action="AttendEvent" asp-controller="Home" method="Post" asp-route-EventFormId="@e.EventFormId" asp-route-UserId="@Model.NewUser.UserId">
+                            <input type="submit" value="Join"/>
+                        </form>
+                    }
+                    else if(e.Attending.Any(a => a.UserId == @Model.NewUser.UserId)){
+                        <form asp-action="UnAttendEvent" asp-controller="Home" method="Post" asp-route-EventFormId="@e.EventFormId" asp-route-UserId="@Model.NewUser.UserId">
+                            <input type="submit" value="Leave"/>
+                        </form>
+                    }
+                    </td>
+                </tr>
+                    
+           }else{
+
+           }
+        }
+        </table>
+
+</body>
+</html>
